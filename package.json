@@ -1,5 +1,6 @@
 {
-  "name": "photo-manager-ui",
+  "name": "photo-manager",
+  "productName": "Photo Manager",
   "version": "0.1.0",
   "private": true,
   "main": "js/electron/app.js",
@@ -21,7 +22,7 @@
   },
   "scripts": {
     "tsc": "tsc",
-    "start": "react-scripts start",
+    "start": "tsc;react-scripts start",
     "build": "tsc;react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -29,9 +30,9 @@
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
     "electron:start": "concurrently -k \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && electronmon .\"",
     "electron": "npx tsc; npx webpack --mode production; npx electron .",
-    "electron:package:mac": "npm run build && electron-builder -m -c.extraMetadata.main=build/app.js",
-    "electron:package:win": "npm run build && electron-builder -w -c.extraMetadata.main=build/app.js",
-    "electron:package:linux": "npm run build && electron-builder -l -c.extraMetadata.main=build/app.js"
+    "electron:package:mac": "npm run build && electron-builder -m -c.extraMetadata.main=js/electron/app.js",
+    "electron:package:win": "npm run build && electron-builder -w -c.extraMetadata.main=js/electron/app.js",
+    "electron:package:linux": "tsc;webpack --mode production; electron-builder -l -c.extraMetadata.main=js/electron/app.js"
   },
   "eslintConfig": {
     "extends": [
@@ -72,10 +73,12 @@
   },
   "build": {
     "appId": "org.tonyvx.photo-manager",
+    "asar":true,
     "productName": "Photo Manager",
     "files": [
-      "build/**/*",
-      "node_modules/**/*"
+      "js/**/*",
+      "node_modules/**/*",
+      "public/**/*"
     ],
     "directories": {
       "buildResources": "electron"
@@ -87,7 +90,12 @@
       "target": "nsis"
     },
     "linux": {
-      "target": "deb"
+      "target": "AppImage",
+      "maintainer": "anthony.valantra@gmail.com",
+      "synopsis": "Photo Manager",
+      "description": "Photo Manager App",
+      "icon":"../public/icon.png",
+      "category" : "Photo & Video"
     }
   }
 }

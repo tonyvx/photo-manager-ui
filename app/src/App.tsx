@@ -31,12 +31,14 @@ function App() {
           attribution="@tonyvx"
           url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}.png"
         />
-         <TileLayer
+        <TileLayer
           url="https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}.png"
         />
       </LayerGroup>
 
-      <Marker position={position}>
+      <Marker position={position} icon={L.icon({
+        iconUrl: 'marker.png'
+      })}>
         <Popup>
           A pretty CSS3 popup. <br /> Easily customizable.
         </Popup>
